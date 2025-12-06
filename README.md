@@ -1,6 +1,6 @@
 # Python UV Template
 
-Opinionated Python project template designed for agent-assisted development.
+Opinionated Python project template.
 
 ## Features
 
@@ -13,11 +13,11 @@ Opinionated Python project template designed for agent-assisted development.
 
 ## Setup & Usage
 
-To use this template and the included workflow tools efficiently, it is recommended to source the included `python-functions.sh` script in your shell configuration.
+To use this template you only need the `python-functions.sh` script. The script uses copier to fetch the template directly from GitHub when you create a project. If needed, you could modify the template and point the script to either a local path or your own repository.
 
 ### 1. Configure your Shell
 
-Add the following to your `.zshrc` (or `.bashrc`):
+Download the script and add the following to your `.zshrc` (or `.bashrc`):
 
 ```bash
 # --- Python Project Management ---
@@ -25,12 +25,15 @@ Add the following to your `.zshrc` (or `.bashrc`):
 # Where new projects will be created
 export DEV_DIR="$HOME/developer"
 
-# Source the functions from this repository (adjust path as needed)
-# If you cloned this repo to ~/developer/templates/python:
-source "$HOME/developer/templates/python/python-functions.sh"
+# Download python-functions.sh to a location of your choice, then source it:
+source "$HOME/.config/python-functions.sh"
+
+# Optional: Use your own fork or a local template path
+# export PYTHON_TEMPLATE_REPO="/path/to/local/template"
+# export PYTHON_TEMPLATE_REPO="gh:your-username/python-template"
 ```
 
-**Note:** Ensure you have `uv` and `git` installed.
+**Requirements:** `uv` and `git` must be installed.
 
 ### 2. Workflow Commands
 

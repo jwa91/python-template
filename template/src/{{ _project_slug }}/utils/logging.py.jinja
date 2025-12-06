@@ -1,0 +1,43 @@
+"""Logging configuration for {{ project_name }}.
+
+Provides a simple setup_logging() function to configure
+console logging with a clean format.
+"""
+
+import logging
+import sys
+from typing import Literal
+
+LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+
+_configured = False
+
+
+def setup_logging(
+    level: LogLevel = "INFO",
+    *,
+    fmt: str = "%(levelname)-8s %(name)s | %(message)s",
+) -> None:
+    """Configure logging for the application.
+
+    Args:
+        level: Minimum log level to display.
+        fmt: Log message format string.
+
+    Example:
+        >>> setup_logging("DEBUG")
+        >>> logger = logging.getLogger(__name__)
+        >>> logger.info("Application started")
+    """
+    global _configured
+    if _configured:
+        return
+
+    handler = logging.StreamHandler(sys.stderr)
+    handler.setFormatter(logging.Formatter(fmt))
+
+    root = logging.getLogger()
+    root.setLevel(level)
+    root.addHandler(handler)
+
+    _configured = True

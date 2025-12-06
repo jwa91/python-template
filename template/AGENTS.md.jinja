@@ -1,0 +1,64 @@
+# AGENTS.md — {{ project_name }}
+
+## Commands
+
+```bash
+cd {{ project_name }}
+uv sync              # Install dependencies
+uv run pytest        # Run tests
+uv run ruff check .  # Lint
+uv run ruff format . # Format
+uv run pyright       # Type check
+uv run lint-imports  # Check import layering
+```
+
+## Project Structure
+
+```
+{{ project_name }}/
+├── src/
+│   └── {{ _project_slug }}/
+│       ├── __init__.py
+│       ├── main.py             # Entry point (top layer)
+│       └── utils/              # Utilities (bottom layer)
+│           ├── __init__.py
+│           └── logging.py
+├── tests/
+│   └── test_example.py
+├── pyproject.toml              # Project config (uv, pytest, hatch)
+├── ruff.toml                   # Linter/formatter config
+├── pyrightconfig.json          # Type checking config
+├── .importlinter               # Import layering rules
+└── .pre-commit-config.yaml     # Pre-commit hooks
+```
+
+## Layered Architecture
+
+Import-linter enforces a layered architecture:
+
+```
+┌─────────────────────────────┐
+│  {{ _project_slug }}.main   │  ← Top layer (entry point)
+└─────────────┬───────────────┘
+              │ can import from ↓
+┌─────────────▼───────────────┐
+│  {{ _project_slug }}.utils  │  ← Bottom layer (foundational)
+└─────────────────────────────┘
+```
+
+**Rule**: Upper layers can import from lower layers, but not vice versa.
+
+## Conventions
+
+- **Package manager**: uv (not pip/poetry)
+- **Linting/formatting**: ruff
+- **Type checking**: pyright (strict)
+- **Docstrings**: Google style, enforced by ruff
+- **Import layering**: Enforced by import-linter
+
+## Adding Dependencies
+
+```bash
+uv add <package>           # Runtime dependency
+uv add --group dev <pkg>   # Dev dependency
+```

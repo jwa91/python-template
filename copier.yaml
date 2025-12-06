@@ -1,0 +1,32 @@
+_min_copier_version: "9.0.0"
+_subdirectory: template
+
+project_name:
+  type: str
+  help: Project name (kebab-case, e.g. my-cool-project)
+  validator: "{% if not project_name %}Project name is required{% endif %}"
+
+_project_slug:
+  type: str
+  help: Project slug (snake_case)
+  default: "{{ project_name|lower|replace('-', '_') }}"
+
+project_description:
+  type: str
+  help: Project description
+  default: "A Python project."
+
+author_name:
+  type: str
+  help: Author name
+  default: "Author Name"
+
+author_email:
+  type: str
+  help: Author email
+  default: "author@example.com"
+
+github_username:
+  type: str
+  help: GitHub username
+  default: "username"

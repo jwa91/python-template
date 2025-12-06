@@ -1,0 +1,39 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Installation
+
+Requires Python >= 3.13 and [uv](https://docs.astral.sh/uv/).
+
+```bash
+git clone <repository-url>
+cd {{ project_name }}
+uv sync
+```
+
+## Usage
+
+```bash
+uv run {{ _project_slug }}
+```
+
+## Development
+
+```bash
+# Run tests
+uv run pytest
+
+# Lint and format
+uv run ruff check .
+uv run ruff format .
+
+# Type check
+uv run pyright
+
+# Check import layering
+uv run lint-imports
+
+# Install pre-commit hooks
+uv run pre-commit install
+```

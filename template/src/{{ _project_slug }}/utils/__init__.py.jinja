@@ -1,0 +1,9 @@
+"""Utility functions for {{ project_name }}.
+
+This is the foundational layer - it should not import from other
+project modules (enforced by import-linter).
+"""
+
+from {{ _project_slug }}.utils.logging import setup_logging
+
+__all__ = ["setup_logging"]

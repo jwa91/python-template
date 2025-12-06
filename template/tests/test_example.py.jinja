@@ -1,0 +1,19 @@
+"""Example tests for {{ project_name }}."""
+
+import pytest
+
+from {{ _project_slug }}.main import main
+from {{ _project_slug }}.utils import setup_logging
+
+
+def test_main_runs_without_error(capsys: pytest.CaptureFixture[str]) -> None:
+    """Test that main() executes without raising exceptions."""
+    main()
+    captured = capsys.readouterr()
+    assert "{{ project_name }}" in captured.out
+
+
+def test_setup_logging_is_idempotent() -> None:
+    """Test that setup_logging can be called multiple times safely."""
+    setup_logging("DEBUG")
+    setup_logging("DEBUG")  # Should not raise or add duplicate handlers

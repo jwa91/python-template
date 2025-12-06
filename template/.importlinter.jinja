@@ -1,0 +1,25 @@
+[importlinter]
+root_package = {{ _project_slug }}
+
+# Layered architecture: upper layers can import from lower layers,
+# but lower layers cannot import from upper layers.
+#
+# Current layers (top to bottom):
+#   1. {{ _project_slug }} (main entry point, CLI, apps)
+#   2. {{ _project_slug }}.utils (foundational utilities)
+#
+# Example: main.py can import from utils, but utils cannot import from main.
+
+[importlinter:contract:layers]
+name = Layered architecture
+type = layers
+layers =
+    {{ _project_slug }}.main
+    {{ _project_slug }}.utils
+
+# Add more layers as your project grows, e.g.:
+# layers =
+#     {{ _project_slug }}.apps
+#     {{ _project_slug }}.services
+#     {{ _project_slug }}.core
+#     {{ _project_slug }}.utils

@@ -1,0 +1,22 @@
+"""Main entry point for {{ project_name }}.
+
+This module is in the top layer and can import from utils.
+The utils layer cannot import from here (enforced by import-linter).
+"""
+
+import logging
+
+from {{ _project_slug }}.utils import setup_logging
+
+logger = logging.getLogger(__name__)
+
+
+def main() -> None:
+    """Run the main application."""
+    setup_logging("INFO")
+    logger.info("Starting {{ project_name }}")
+    print(f"Hello from {{ project_name }}!")
+
+
+if __name__ == "__main__":
+    main()

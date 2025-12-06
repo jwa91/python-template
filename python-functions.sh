@@ -75,19 +75,35 @@ function mkpyproject() {
         --data "author_email=$author_email" \
         --data "github_username=$github_user"; then
         echo "Error: Copier failed" >&2
-        # Only cleanup if directory was just created and is empty/broken
-        # rm -rf "$project_path" 2>/dev/null 
+        [[ -d "$project_path" ]] && rm -rf "$project_path" && echo "Cleaned up failed project directory" >&2
         return 1
     fi
 
-    cd "$project_path" || return 1
+    cd "$project_path" || {
+        echo "Error: Failed to cd to $project_path" >&2
+        rm -rf "$project_path" && echo "Cleaned up failed project directory" >&2
+        return 1
+    }
 
     # Setup environment and git
     echo "Initializing environment..."
-    uv sync
+    if ! uv sync; then
+        echo "Error: Failed to sync environment" >&2
+        cd "$HOME" && rm -rf "$project_path" && echo "Cleaned up failed project directory" >&2
+        return 1
+    fi
 
-    git init -b main
-    uv run pre-commit install
+    if ! git init -b main; then
+        echo "Error: Failed to initialize git" >&2
+        cd "$HOME" && rm -rf "$project_path" && echo "Cleaned up failed project directory" >&2
+        return 1
+    fi
+
+    if ! uv run pre-commit install; then
+        echo "Error: Failed to install pre-commit hooks" >&2
+        cd "$HOME" && rm -rf "$project_path" && echo "Cleaned up failed project directory" >&2
+        return 1
+    fi
 
     # Run pre-commit on all files (allow failure for auto-fixes)
     echo "Running initial checks..."

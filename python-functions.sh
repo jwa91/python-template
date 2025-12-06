@@ -69,7 +69,7 @@ function mkpyproject() {
     # Create project from template
     if ! uvx copier copy "$PYTHON_TEMPLATE_REPO" "$project_path" \
         --trust \
-        --quiet \
+        --vcs-ref=HEAD \
         --data "project_name=$name" \
         --data "_project_slug=$project_slug" \
         --data "author_name=$author_name" \

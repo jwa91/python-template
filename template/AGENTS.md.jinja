@@ -16,37 +16,25 @@ uv run lint-imports  # Check import layering
 
 ```
 {{ project_name }}/
-├── src/
-│   └── {{ _project_slug }}/
+├── src/{{ _project_slug }}/
+│   ├── __init__.py
+│   ├── main.py
+│   └── utils/
 │       ├── __init__.py
-│       ├── main.py             # Entry point (top layer)
-│       └── utils/              # Utilities (bottom layer)
-│           ├── __init__.py
-│           └── logging.py
-├── tests/
-│   └── test_example.py
-├── pyproject.toml              # Project config (uv, pytest, hatch)
-├── ruff.toml                   # Linter/formatter config
-├── pyrightconfig.json          # Type checking config
-├── .importlinter               # Import layering rules
-└── .pre-commit-config.yaml     # Pre-commit hooks
+│       └── logging.py
+├── tests/test_example.py
+├── pyproject.toml
+├── ruff.toml
+├── pyrightconfig.json
+├── .importlinter
+└── .pre-commit-config.yaml
 ```
 
 ## Layered Architecture
 
-Import-linter enforces a layered architecture:
-
-```
-┌─────────────────────────────┐
-│  {{ _project_slug }}.main   │  ← Top layer (entry point)
-└─────────────┬───────────────┘
-              │ can import from ↓
-┌─────────────▼───────────────┐
-│  {{ _project_slug }}.utils  │  ← Bottom layer (foundational)
-└─────────────────────────────┘
-```
-
-**Rule**: Upper layers can import from lower layers, but not vice versa.
+Import layers (enforced by import-linter):
+- `{{ _project_slug }}.main` (top) → can import from `{{ _project_slug }}.utils` (bottom)
+- `{{ _project_slug }}.utils` (bottom) → cannot import from `{{ _project_slug }}.main` (top)
 
 ## Conventions
 
@@ -57,6 +45,8 @@ Import-linter enforces a layered architecture:
 - **Import layering**: Enforced by import-linter
 
 ## Adding Dependencies
+
+**Rule**: Always ask for permission before adding dependencies.
 
 ```bash
 uv add <package>           # Runtime dependency

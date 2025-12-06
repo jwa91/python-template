@@ -62,6 +62,9 @@ This single command will:
 4.  **Setup** pre-commit hooks for code quality.
 5.  **Format** the code and create the **initial commit**.
 6.  **Navigate** you into the project directory so you can start coding immediately.
+7.  **Activate** the virtual environment.
+
+> **Why auto-activate?** Even though `uv run` handles environments automatically, we activate the `.venv` as a safety measure. This prevents accidentally running `pip install` against your system Python and shows the correct Python version in your prompt.
 
 **Switch to a project:**
 

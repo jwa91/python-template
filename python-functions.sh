@@ -115,8 +115,11 @@ function mkpyproject() {
     git add -A
     git commit -m "Initial commit"
 
+    # Activate virtual environment for safety (prevents accidental pip install to system)
+    source .venv/bin/activate
+
     echo "\n✓ Project ready: $project_path"
-    echo "  Run tests:  uv run pytest"
+    echo "  Run tests:  uv run pytest (or just pytest)"
     echo "  Start dev:  cursor . (or code .)"
 }
 
@@ -151,11 +154,8 @@ function workon() {
     echo "Changed directory to '$project_path'"
 
     if [[ -d ".venv" ]]; then
-        echo "Found '.venv' directory."
-        echo "=> Recommended: Use 'uv run <command>'"
-        echo "=> Optional: Activate manually via 'source .venv/bin/activate'"
-        # Optional: automatically activate
-        # source .venv/bin/activate
+        source .venv/bin/activate
+        echo "Activated virtual environment (.venv)"
     elif [[ -f "pyproject.toml" ]]; then
         local pinned_version=""
         if [[ -f ".python-version" ]]; then 

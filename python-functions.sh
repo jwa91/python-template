@@ -61,6 +61,8 @@ function mkpyproject() {
     local author_email=$(git config user.email)
     # Hardcode your GitHub username here to skip the prompt (or override via env var)
     local github_user="${GITHUB_USER:-$PYTHON_TEMPLATE_GITHUB_USER}"
+    # Compute project slug (kebab-case -> snake_case)
+    local project_slug=$(echo "$name" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
 
     echo "Creating project '$name' at $project_path..."
 
@@ -68,6 +70,7 @@ function mkpyproject() {
     if ! uvx copier copy "$PYTHON_TEMPLATE_REPO" "$project_path" \
         --trust \
         --data "project_name=$name" \
+        --data "_project_slug=$project_slug" \
         --data "author_name=$author_name" \
         --data "author_email=$author_email" \
         --data "github_username=$github_user"; then

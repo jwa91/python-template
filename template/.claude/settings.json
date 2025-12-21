@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run python $CLAUDE_PROJECT_DIR/.claude/hooks/format-lint.py",
+            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/format-lint.py",
             "timeout": 30
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run python $CLAUDE_PROJECT_DIR/.claude/hooks/pre-commit-check.py",
+            "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/pre-commit-check.py",
             "timeout": 120
           }
         ]

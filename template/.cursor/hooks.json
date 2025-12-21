@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      { "command": "uv run python .cursor/hooks/format-lint.py" }
+    ],
+    "afterTabFileEdit": [
+      { "command": "uv run python .cursor/hooks/format-lint.py" }
+    ],
+    "beforeShellExecution": [
+      { "command": "uv run python .cursor/hooks/pre-commit-check.py" }
+    ]
+  }
+}
+
